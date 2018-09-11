@@ -119,7 +119,7 @@ def getSubUrl(data):
         Log(data['sTS'])
         ssnUrl = 'http://xsubs.tv/series/'+str(srid)+'/'+subpages[0]+'.xml'
         ssnElem = HTML.ElementFromURL(ssnUrl)
-        #First try get 
+        #First try get
         #//subg[etitle[@number=4]]//sr[@published_on!="" and team/text()='REPACK KILLERS' and fmt/text()='HDTV.x264']//@rlsid
         fmt  = getAppropriateFmt(sre)
         Log(fmt)
@@ -172,9 +172,9 @@ def getSubUrl(data):
             else:
                 dctTeam[lala.xpath('team/text()')[0]]= [info]
         for key, value in dctTeam.iteritems():
-            Log('Key: '+key + '   Value= ')
+            Log('Key: '+key + ' Team: '+ data['sR'] +' IsValid='+ str(key.lower() == data['sR'].lower() or key.lower() in data['sR'].lower()) +'  Value= ')
             Log(value)
-            if key.lower() == data['sR'].lower():
+            if key.lower() == data['sR'].lower() or key.lower() in data['sR'].lower():
                 for vl in value:
                     if vl['fmt'] == fmt:
                         Log("//subg[etitle[@number="+data['sTE']+"]]//sr[@published_on!='' and team/text()='"+key+"' and fmt/text()='"+fmt+"']//@rlsid")
@@ -197,7 +197,7 @@ def getReleaseGroup(filename):
     if ('gttvsd' in splitName[-2].lower()) or ('gtrd'in splitName[-2].lower()) or ('eztv'in splitName[-2].lower()) or ('vtv'in splitName[-2].lower()):
         group = splitName[-3].strip()
     else:
-        group = splitName[-2].strip() 
+        group = splitName[-2].strip()
     if 'REPACK' in filename:
         group = 'REPACK '+ group
     if 'PROPER' in filename:
@@ -357,7 +357,7 @@ class XsubsSubtitlesAgentTvShows(Agent.TV_Shows):
                             return
                         Log('Subtitle URL: '+subUrl)
                         language = 'ell'
-                        
+
                         if language in part.subtitles:
                             if subUrl in part.subtitles[language]:
                                 return
